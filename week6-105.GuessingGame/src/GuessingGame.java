@@ -1,3 +1,7 @@
+/*
+A guessing game to guess the number you're thinking of using a binary search
+*/
+
 import java.util.Scanner;
 
 public class GuessingGame {
@@ -13,11 +17,41 @@ public class GuessingGame {
         instructions(lowerLimit, upperLimit);
 
         // write the guessing logic here
+        int maxQuestions = howManyTimesHalvable(upperLimit - lowerLimit);
 
+        while (true) {
+            
+            int midValue = average(upperLimit, lowerLimit);
+            boolean isGreaterThanMidValue = isGreaterThan(midValue);
+            
+            if (isGreaterThanMidValue) {
+                lowerLimit = midValue + 1;
+                if (upperLimit == lowerLimit) {
+                    System.out.println("The number you're thinking of is " + upperLimit + ".");
+                    break;
+                }
+            } else {
+                upperLimit = midValue;
+                if (upperLimit == lowerLimit) {
+                    System.out.println("The number you're thinking of is " + lowerLimit + ".");
+                    break;
+                }
+            }
+
+        }
     }
 
     // implement here the methods isGreaterThan and average
-
+    public boolean isGreaterThan(int value) {
+        System.out.println("Is your number greater than " + value + " ? (y/n)");
+        String input = this.reader.nextLine();
+        return input.equals("y");
+    }
+    
+    public int average(int firstNumber, int secondNumber) {
+        return (firstNumber + secondNumber) / 2;
+    }
+    
     public void instructions(int lowerLimit, int upperLimit) {
         int maxQuestions = howManyTimesHalvable(upperLimit - lowerLimit);
 

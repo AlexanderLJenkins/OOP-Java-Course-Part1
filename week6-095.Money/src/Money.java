@@ -22,7 +22,33 @@ public class Money {
     public int cents() {
         return cents;
     }
-
+    
+    public Money plus(Money added) {
+        return new Money(this.euros + added.euros, this.cents + added.cents);
+    }
+    
+    public boolean less(Money compared) {
+        // money = euros + cents
+        return this.euros + this.cents/100.0 < compared.euros + compared.cents/100.0;
+    }
+    
+    public Money minus(Money decremented) {
+        
+        int newEuros = this.euros - decremented.euros;
+        int newCents = this.cents - decremented.cents;
+        
+        if (newCents < 0) {
+            newEuros--;
+            newCents = 100 + newCents;
+        }
+        
+        if (newEuros < 0) {
+            return new Money(0, 0);
+        }
+        
+        return new Money(newEuros, newCents);
+    }
+    
     @Override
     public String toString() {
         String zero = "";
